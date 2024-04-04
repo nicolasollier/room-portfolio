@@ -1,18 +1,31 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <link rel="stylesheet" href="src/css/main.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app">
-      <!-- UI may be deleted later -->
-      <div id="ui"></div>
-      <canvas id="game"></canvas>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="stylesheet" href="src/css/main.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite App</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- UI may be deleted later -->
+    <div id="ui">
+      <p class="note">Click around to moove</p>
+      <div id="textbox-container">
+        <div class="textbox">
+          <p id="dialogue" class="ui-text"></p>
+          <div class="btn-container">
+            <button id="close" class="ui-close-button"></button>
+          </div>
+        </div>
+      </div>
     </div>
-    <script type="module" src="src/js/main.js"></script>
-  </body>
+    <canvas id="game"></canvas>
+  </div>
+  <script type="module" src="src/js/main.js"></script>
+</body>
+
 </html>
