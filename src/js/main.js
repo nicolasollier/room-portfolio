@@ -22,7 +22,6 @@ k.setBackground(k.Color.fromHex("#000000"));
 k.scene("main", async () => {
   const mapData = await (await fetch("./assets/map.json")).json();
   const layers = mapData.layers;
-
   const map = k.add([k.sprite("map"), k.pos(0), k.scale(scaleFactor)]);
 
   const player = k.make([
@@ -42,6 +41,7 @@ k.scene("main", async () => {
     "player",
   ]);
 
+  //handle all layers created by Tiled
   for (const layer of layers) {
     if (layer.name === "boundaries") {
       for (const boundary of layer.objects) {
@@ -84,6 +84,14 @@ k.scene("main", async () => {
   k.onUpdate(() => {
     k.camPos(player.worldPos().x, player.worldPos().y - 100);
   });
+
+  k.onMouseDown((mouseBtn) => {
+    if (mouseBtn !== "left" || player.isInDialogue) return;
+
+    const worldMousePos = k.toWorld(k.mousePos());
+    player.moveTo(worldMousePos, player.speed);
+  });
+  //----------- //
 });
 
 k.go("main");
