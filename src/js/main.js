@@ -1,5 +1,6 @@
 import { scaleFactor } from './constants'
 import { k } from './kaboom/kaboomCtx'
+import { displayDialogue } from './utils'
 
 k.loadSprite("spritesheet", "./assets/spritesheet.png", {
   sliceX: 39,
@@ -12,24 +13,20 @@ k.loadSprite("spritesheet", "./assets/spritesheet.png", {
     "idle-up": 1014,
     "walk-up": { from: 1014, to: 1017, loop: true, speed: 8 },
   },
-})
+});
 
-k.loadSprite("map", "./assets/map.png")
-k.setBackground(k.color(0, 0, 0))
+k.loadSprite("map", "./assets/map.png");
 
-//Define the scene elements
+k.setBackground(k.Color.fromHex("#000000"));
+
 k.scene("main", async () => {
-  const mapData = await (await fetch("./assets/map.json")).json()
-  const layers = mapData.layers
+  const mapData = await (await fetch("./assets/map.json")).json();
+  const layers = mapData.layers;
 
-  const map = k.make([
-    k.sprite("map"),
-    k.pos(0),
-    k.scale(scaleFactor),
-  ])
+  const map = k.add([k.sprite("map"), k.pos(0), k.scale(scaleFactor)]);
 
   const player = k.make([
-    k.sprite("spritesheet", { anim: "" }),
+    k.sprite("spritesheet", { anim: "idle-down" }),
     k.area({
       shape: new k.Rect(k.vec2(0, 3), 10, 10),
     }),
@@ -40,33 +37,53 @@ k.scene("main", async () => {
     {
       speed: 250,
       direction: "down",
-      isInDialog: false,
+      isInDialogue: false,
     },
     "player",
-  ])
+  ]);
 
   for (const layer of layers) {
     if (layer.name === "boundaries") {
       for (const boundary of layer.objects) {
         map.add([
           k.area({
-            shape: k.vec2(k.vect2(0), boundary.width, boundary.height),
+            shape: new k.Rect(k.vec2(0), boundary.width, boundary.height),
           }),
           k.body({ isStatic: true }),
           k.pos(boundary.x, boundary.y),
-          boundary.name
-        ])
+          boundary.name,
+        ]);
 
         if (boundary.name) {
           player.onCollide(boundary.name, () => {
-            player.isInDialog = true
-            // TODO: Show dialog
-          })
+            player.isInDialogue = true;
+            displayDialogue(
+              dialogueData[boundary.name],
+              () => (player.isInDialogue = false)
+            );
+          });
+        }
+      }
+      continue;
+    }
+
+    if (layer.name === "spawnpoints") {
+      for (const entity of layer.objects) {
+        if (entity.name === "player") {
+          player.pos = k.vec2(
+            (map.pos.x + entity.x) * scaleFactor,
+            (map.pos.y + entity.y) * scaleFactor
+          );
+          k.add(player);
+          continue;
         }
       }
     }
   }
-})
 
-//Run the scene
-k.go("main")
+  k.onUpdate(() => {
+    k.camPos(player.worldPos().x, player.worldPos().y - 100);
+  });
+});
+
+k.go("main");
