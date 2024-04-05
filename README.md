@@ -1,7 +1,6 @@
 
 # A 2D Game as a Developer Portfolio
-
-While drawing inspiration from the innovative 3D developer portfolios out there, I've decided to take a different route by creating a 2D version. This serves as a customizable template for anyone looking to showcase their work in a unique, interactive manner. It's fully responsive, ensuring a seamless experience on both desktop and mobile devices.
+It's fully responsive, ensuring a seamless experience on both desktop and mobile devices.
 
 **A Glimpse of the Project**
 
