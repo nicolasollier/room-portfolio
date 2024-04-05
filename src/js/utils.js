@@ -26,9 +26,11 @@ export function displayDialogue(text, onDisplayEnd) {
     dialogue.innerHTML = ""
     clearInterval(interval)
     closeBtn.removeEventListener("click", handleClose)
+    document.removeEventListener("keydown", handleClose)
   }
 
   closeBtn.addEventListener("click", handleClose)
+  document.addEventListener("keydown", handleClose)
 }
 
 export function setCamScale(k) {
