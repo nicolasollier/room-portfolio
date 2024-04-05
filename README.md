@@ -5,7 +5,7 @@ While drawing inspiration from the innovative 3D developer portfolios out there,
 
 **A Glimpse of the Project**
 
-<img width="1195" alt="image" src="https://github.com/nicolasollier/room-portfolio/assets/91204591/80a064cb-c42b-4afd-b56f-a6611f4351ee">
+<img width="664" alt="image" src="https://github.com/nicolasollier/room-portfolio/assets/91204591/afaa5ac1-0beb-4692-8452-5aae84c3dfcf">
 
 **Experience It Live:** [https://nicolasollier.com](https://nicolasollier.com)
 
